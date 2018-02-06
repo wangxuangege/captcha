@@ -7,6 +7,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;captcha验证码服务端启动好后，启动captcha-java-demo，展示类似12306图片组合验证码，根据问题，选择正确的图片，然后提交。目前前端用户体验从多方面优化：
 
 &nbsp;&nbsp;&nbsp;&nbsp;1）选中图片会在点击位置添加一个标记；
+![](static/选中图片.png)
 
 &nbsp;&nbsp;&nbsp;&nbsp;2）在同一个图片上面多次点击，不会出现多个标记，优化用户体验；
 
