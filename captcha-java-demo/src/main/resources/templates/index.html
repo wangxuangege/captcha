@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>验证码校验demo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="application/javascript" src="/js/jquery-3.1.1.min.js"/>
+    <script type="application/javascript" src="/js/captcha-v1.js"/>
+    <script th:inline="javascript">
+        var captcha = undefined;
+
+        /**
+         * 初始化验证码
+         */
+        $(function () {
+            // 初始化验证码
+            captcha = myCaptcha('captcha_div', {
+                captchaId: [[${captchaId}]],
+                challengeId: [[${challengeId}]],
+                serviceGateway: [[${captchaServiceGateway}]],
+                width: 320,
+                height: 180,
+                verifyCallback: verifyCallback
+            });
+        });
+
+        /**
+         * 回调
+         * @param ret
+         */
+        function verifyCallback(ret) {
+            if (ret.valid) {
+                $('#form').submit();
+            } else {
+                if (ret.errMsg) {
+                    alert(ret.errMsg);
+                } else {
+                    alert('校验失败，验证码被刷新，请重新校验');
+                }
+            }
+        }
+
+        /**
+         * 判断是否提交
+         */
+        function btnClick() {
+            if (captcha != undefined) {
+                captcha.validate();
+            } else {
+                alert('验证码组件未初始化完成');
+            }
+        }
+    </script>
+</head>
+<body>
+<form id="form" action="submit" method="post" style="margin-left: 90px;margin-top: 90px;">
+    <div id="captcha_div"></div>
+    <input type="hidden" name="challengeId" id="challengeId" th:value="${challengeId}"/>
+    姓名：<input type="text" id="username" name="username"/>
+    <input type="button" value="提交" onclick="btnClick();"/>
+</form>
+</body>
+</html>
