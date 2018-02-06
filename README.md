@@ -69,10 +69,10 @@
 
 <table>
   <tr>
-    <th width=5%, bgcolor=yellow >关键工作流</th>
+    <th width=10%, bgcolor=yellow >关键工作流</th>
     <th width=30%, bgcolor=yellow>关键输入</th>
     <th width=20%, bgcolor=yellow>关键输出</th>
-    <th width=45%, bgcolor=yellow>说明</th>
+    <th width=40%, bgcolor=yellow>说明</th>
   </tr>
   <tr>
     <td bgcolor=rgb(0,10,0)> 1.1 </td>
