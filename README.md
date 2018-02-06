@@ -63,5 +63,68 @@
 
 # 3. 验证码工作流程图
 
+&nbsp;&nbsp;&nbsp;&nbsp;验证码工作流程时序如下图所示，详细说明见表格。
+
 ![](static/验证码工作时序.png)
+
+<table>
+  <tr>
+    <th width=5%, bgcolor=yellow >关键工作流</th>
+    <th width=30%, bgcolor=yellow>关键输入</th>
+    <th width=10%, bgcolor=yellow>关键输出</th>
+    <th width=55%, bgcolor=yellow>说明</th>
+  </tr>
+  <tr>
+    <td bgcolor=rgb(0,10,0)> 1.1 </td>
+    <td>captchaId；
+        验证码服务版本；
+        请求时间；
+        签名</td>
+    <td>challengeId</td>
+    <td>预初始化阶段，captchaId是应用接入验证码服务前申请的唯一标示，申请的结果中还包括私钥secret，请求时候签名信息是采用MD5签名生成</td>
+  </tr>
+  <tr>
+    <td bgcolor=rgb(0,10,0)> 2 </td>
+    <td>captchaId；
+        challengeId；
+        验证码服务网关；
+        验证码渲染的DOM元素ID；</td>
+    <td></td>
+    <td>初始化验证码，应用前端引入验证码JS库后，调用验证码初始化方法，验证码JS库中会根据初始化的参数信息，还会申请验证码服务端进行验证码渲染操作</td>
+  </tr>
+  <tr>
+    <td bgcolor=rgb(0,10,0)> 2.1 </td>
+    <td>challengeId</td>
+    <td>验证码图片</td>
+    <td>申请验证码展示，前端JS库根据challengeId申请到验证码后端生产验证码图片，并且将验证码图片和验证码对应的答案信息存储在后端，供验证码校验使用</td>
+  </tr>
+  <tr>
+    <td bgcolor=rgb(0,10,0)> 3 </td>
+    <td>captchaId；
+        challengeId；
+        验证码服务版本；
+        请求时间；
+        用户轨迹信息；
+        签名</td>
+    <td>校验状态，并执行用户初始化验证码的回调方法，验证码回调方法中用户会执行表单的提交动作</td>
+    <td>验证码一次校验，用户在浏览器输入表单提交的信息，并且验证码渲染后，根据验证码提示，滑动/点击用户轨迹信息，在表单提交前校验验证码用户轨迹是否匹配，若匹配则将表单提交到应用后端，在验证码组件后端，会将验证码一次校验的状态存储起来供二次校验使用</td>
+  </tr>
+  <tr>
+    <td bgcolor=rgb(0,10,0)> 4 </td>
+    <td>challengeId；
+        表单输入</td>
+    <td></td>
+    <td>提交表单，表单hidden字段需要包含验证码challengeId</td>
+  </tr>
+  <tr>
+    <td bgcolor=rgb(0,10,0)> 4.1 </td>
+    <td>captchaId；
+        challengeId；
+        验证码服务版本；
+        请求时间；
+        签名</td>
+    <td>验证码状态，若验证码状态为成功，用户则执行其业务逻辑，否则提示用户验证码校验失败</td>
+    <td>验证码二次校验，根据challengeId读取验证码校验状态</td>
+  </tr>
+</table>
 
